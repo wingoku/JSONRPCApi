@@ -1,0 +1,23 @@
+plugins {
+    id "net.ltgt.apt" version "0.10"
+}
+
+version '1.0-SNAPSHOT'
+
+apply plugin: "net.ltgt.apt"
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.thetransactioncompany:jsonrpc2-server:1.11'
+    compile 'org.nanohttpd:nanohttpd-websocket:2.3.1'
+    compile 'com.google.dagger:dagger:2.11'
+    apt 'com.google.dagger:dagger-compiler:2.11'
+}

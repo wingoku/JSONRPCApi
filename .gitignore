@@ -1,9 +1,8 @@
 *.iml
 .gradle
-/gradle
-/.idea/workspace.xml
-/.idea/libraries
-/build
-/captures
+gradle
+.idea/workspace.xml
+.idea/libraries
+.idea
+build
 *.log
-/app/src/test

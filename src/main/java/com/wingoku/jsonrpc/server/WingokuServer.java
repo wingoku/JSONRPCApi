@@ -11,7 +11,6 @@ import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.wingoku.jsonrpc.handlers.CredentialRequestHandler;
 import com.wingoku.jsonrpc.handlers.WarehouseRequestHandler;
 import com.wingoku.jsonrpc.interfaces.WingokuServerCallback;
-import com.wingoku.jsonrpc.interfaces.components.DaggerServerComponent;
 import com.wingoku.jsonrpc.models.JSONRPCRequest;
 import com.wingoku.jsonrpc.utils.Constants;
 import fi.iki.elonen.NanoHTTPD;
@@ -72,7 +71,7 @@ public class WingokuServer extends NanoHTTPD {
     }
 
     /**
-     *  This method will be called by {@link #NanoHTTPD(int)} upon receiving requests from client
+     *  This method will be called by NanoHTTPD upon receiving requests from client
      * @param session comprehensive class containing information about the request
      * @return response to the client
      */

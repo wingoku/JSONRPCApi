@@ -12,7 +12,6 @@ import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
 import com.wingoku.jsonrpc.handlers.CredentialRequestHandler;
 import com.wingoku.jsonrpc.handlers.WarehouseRequestHandler;
 import com.wingoku.jsonrpc.interfaces.WingokuServerCallback;
-import com.wingoku.jsonrpc.interfaces.components.DaggerServerComponent;
 import com.wingoku.jsonrpc.models.JSONRPCRequest;
 import com.wingoku.jsonrpc.utils.Constants;
 import fi.iki.elonen.NanoHTTPD;

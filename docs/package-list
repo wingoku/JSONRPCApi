@@ -1,0 +1,9 @@
+com.wingoku.jsonrpc
+com.wingoku.jsonrpc.handlers
+com.wingoku.jsonrpc.interfaces
+com.wingoku.jsonrpc.interfaces.components
+com.wingoku.jsonrpc.interfaces.implementations
+com.wingoku.jsonrpc.models
+com.wingoku.jsonrpc.modules
+com.wingoku.jsonrpc.server
+com.wingoku.jsonrpc.utils

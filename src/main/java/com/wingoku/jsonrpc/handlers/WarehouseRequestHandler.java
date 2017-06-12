@@ -41,6 +41,7 @@ public class WarehouseRequestHandler implements RequestHandler {
 
     @Override
     public JSONRPC2Response process(JSONRPC2Request request, MessageContext requestCtx) {
+        System.out.println("process!!  2");
         // check if method name in the request exists in the Warehouse interface
         if (request.getMethod().equals(Warehouse.WarehouseMethods.getPickList.name())) {
             ArrayList<String> response = mWarehouseImpl.getPickList();

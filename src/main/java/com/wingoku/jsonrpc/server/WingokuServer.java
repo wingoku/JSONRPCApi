@@ -5,6 +5,7 @@ package com.wingoku.jsonrpc.server;
  */
 
 import com.google.gson.Gson;
+import com.thetransactioncompany.jsonrpc2.JSONRPC2Error;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
 import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
@@ -72,7 +73,7 @@ public class WingokuServer extends NanoHTTPD {
     }
 
     /**
-     *  This method will be called by {@link #NanoHTTPD(int)} upon receiving requests from client
+     *  This method will be called by NanoHTTPD upon receiving requests from client
      * @param session comprehensive class containing information about the request
      * @return response to the client
      */
@@ -86,12 +87,10 @@ public class WingokuServer extends NanoHTTPD {
         if (Method.POST.equals(method)) {
             try {
                 session.parseBody(files);
-            } catch (IOException ioe) {
-                return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: " + ioe.getMessage());
-            } catch (ResponseException re) {
-                return newFixedLengthResponse(re.getStatus(), MIME_PLAINTEXT, re.getMessage());
+            } catch (Exception e) {
+                JSONRPC2Error error = new JSONRPC2Error(JSONRPC2Error.INTERNAL_ERROR.getCode(), JSONRPC2Error.INTERNAL_ERROR.getMessage(), e.getMessage());
+                return newFixedLengthResponse(new JSONRPC2Response(error, "").toJSONString());
             }
-
 
             String postData = "";
             if (session.getHeaders().get("content-type").equals("application/json")) {
@@ -99,7 +98,7 @@ public class WingokuServer extends NanoHTTPD {
 
                 if (Constants.DEBUG_MODE) {
                     System.out.println("post Data is: " + postData);
-                    System.out.println(String.format("URI: %s, Method: %s, Header: %s, files: %s", uri, method, headers, files));
+                    System.out.println(Constants.ANSI_RED + String.format("URI: %s, Method: %s, Header: %s, files: %s", uri, method, headers, files)+ Constants.ANSI_RESET);
                 }
 
                 JSONRPCRequest rpcRequestModel = mapJsonRequestToModel(postData);
@@ -107,14 +106,17 @@ public class WingokuServer extends NanoHTTPD {
                 JSONRPC2Request request = new JSONRPC2Request(rpcRequestModel.getMethod(), rpcRequestModel.getParams(), rpcRequestModel.getId());
                 JSONRPC2Response response = mRPCDispatcher.process(request, null);
 
-                System.out.println("request " + request);
-                System.out.println("response " + response);
+                System.out.println(Constants.ANSI_GREEN + "request " + request+ Constants.ANSI_RESET);
+                System.out.println(Constants.ANSI_BLUE +"response " + response+ Constants.ANSI_RESET);
 
                 return newFixedLengthResponse(response.toJSONString());
             }
-            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_HTML, "Content Type Must Be application/json");
+            JSONRPC2Error error = new JSONRPC2Error(JSONRPC2Error.INVALID_PARAMS.getCode(), JSONRPC2Error.INVALID_PARAMS.getMessage(), "Content Type Must Be application/json");
+            return newFixedLengthResponse(new JSONRPC2Response(error, "").toJSONString());
         }
-        return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, MIME_HTML, "Only POST requests are supported by server at the moment");
+
+        JSONRPC2Error error = new JSONRPC2Error(JSONRPC2Error.INVALID_REQUEST.getCode(), JSONRPC2Error.INVALID_REQUEST.getMessage(), " Only POST requests are supported by server at the moment");
+        return newFixedLengthResponse(new JSONRPC2Response(error, "").toJSONString());
     }
 
     /**

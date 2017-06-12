@@ -43,7 +43,7 @@ public class CredentialRequestHandler implements RequestHandler {
     @Override
     public JSONRPC2Response process(JSONRPC2Request request, MessageContext requestCtx) {
         // check if method name in the request exists in the Warehouse interface
-
+        System.out.println("process!!  1");
         if (request.getMethod().equals(Credentials.CredentialMethods.login.name())) {
             Map<String, Object> requestParamsMap = request.getNamedParams();
             HashMap<String, String> response = mCredentialsImpl.login((String)requestParamsMap.get("userName"), (String)requestParamsMap.get("password"));
